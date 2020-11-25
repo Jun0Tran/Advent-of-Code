@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class day5 {
     public static void main(String[] args) {
-        String diagProg = FileUtil.loadFile("C:/Users/Owner/.vscode/Projects/AOC 2019/Day 5/day5/src/input5.txt").get(0); //gets input2.txt as a string
+        String diagProg = FileUtil.loadFile(System.getProperty("user.dir") + "/day5/src/input5.txt").get(0); //gets input2.txt as a string
         String[] stringInput = diagProg.split(",");
         int inputSize = stringInput.length;
         System.out.println(stringInput);
