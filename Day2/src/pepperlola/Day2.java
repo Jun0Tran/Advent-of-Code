@@ -49,9 +49,7 @@ public class Day2 {
     }
 
     public static boolean xor(boolean a, boolean b) {
-        if (a || b)
-            return !a || !b;
-        return false;
+        return (a || b) && (!a || !b);
     }
 
     public static void main(String[] args) {
