@@ -8,7 +8,6 @@ public class Day5 {
 
     private static final String[] badStrings = new String[]{"ab", "cd", "pq", "xy"};
     private static final String[] vowels = new String[]{"a", "e", "i", "o", "u"};
-    private static final String split2CharRegex = "(?<=\\G..)";
 
     public static int part1(List<String> input) {
         return (int) input.stream().filter(Day5::validateString1).count();
@@ -16,7 +15,6 @@ public class Day5 {
 
     public static int part2(List<String> input) {
         return (int) input.stream().filter(Day5::validateString2).count();
-//        return validateString2("xxyxx") ? 1 : 0;
     }
 
     public static boolean validateString1(String string) {
@@ -68,11 +66,6 @@ public class Day5 {
             if (s.equals(c)) count++;
         }
         return count;
-    }
-
-    public static int countStringInstances(String in, String c) {
-        in = in.replaceFirst(c, "");
-        return (in.split(c, -1).length) - 1;
     }
 
     public static void main(String[] args) {
