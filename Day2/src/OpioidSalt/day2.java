@@ -29,6 +29,7 @@ public class day2 {
             char passLetter = policyAndPasswords.get(i + 1).charAt(0);
             String password = policyAndPasswords.get(i + 2);
             int letterCount = 0;
+            
             for( int j = 0; j < password.length( ); j++ ) {
                 char temp = password.charAt( j );
 
