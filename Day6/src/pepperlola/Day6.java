@@ -3,7 +3,7 @@ package pepperlola;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Day4 {
+public class Day6 {
 
     public static long part1(List<String> input) {
         List<List<String>> groupsQuestions = new ArrayList<>(parsePassports(input).values());
