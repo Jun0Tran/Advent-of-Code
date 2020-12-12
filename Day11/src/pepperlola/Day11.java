@@ -17,7 +17,7 @@ public class Day11 {
                 break;
             }
 
-            generations ++;
+            generations++;
         }
 
         return countOccupiedSeats(board);
@@ -36,7 +36,7 @@ public class Day11 {
                 break;
             }
 
-            generations ++;
+            generations++;
         }
 
         return countOccupiedSeats(board);
@@ -47,7 +47,7 @@ public class Day11 {
         for (List<Integer> line : list) {
             for (int i : line) {
                 if (i == 1)
-                    total ++;
+                    total++;
             }
         }
 
@@ -102,7 +102,7 @@ public class Day11 {
 
         for (int i : surroundingStates) {
             if (i == 1)
-                occupiedNeighbors ++;
+                occupiedNeighbors++;
         }
 
         if (currentState == 0 && occupiedNeighbors == 0) {
@@ -178,15 +178,15 @@ public class Day11 {
         int dY = -1;
 
         while (x + dX >= 0 && y + dY >= 0 && input.get(y + dY).get(x + dX) == -1) {
-            dX --;
-            dY --;
+            dX--;
+            dY--;
         }
         if (x + dX >= 0 && y + dY >= 0)
             surroundingStates.add(input.get(y + dY).get(x + dX));
         dY = -1;
 
         while (y + dY >= 0 && input.get(y + dY).get(x) == -1) {
-            dY --;
+            dY--;
         }
         if (y + dY >= 0)
             surroundingStates.add(input.get(y + dY).get(x));
@@ -195,8 +195,8 @@ public class Day11 {
         dY = -1;
 
         while (x + dX < width && y + dY >= 0 && input.get(y + dY).get(x + dX) == -1) {
-            dX ++;
-            dY --;
+            dX++;
+            dY--;
         }
         if (y + dY >= 0 && x + dX < width)
             surroundingStates.add(input.get(y + dY).get(x + dX));
@@ -204,7 +204,7 @@ public class Day11 {
         dX = -1;
 
         while (x + dX >= 0 && input.get(y).get(x + dX) == -1) {
-            dX --;
+            dX--;
         }
 
         if (x + dX >= 0) {
@@ -214,7 +214,7 @@ public class Day11 {
         dX = 1;
 
         while (x + dX < width && input.get(y).get(x + dX) == -1) {
-            dX ++;
+            dX++;
         }
 
         if (x + dX < width) {
@@ -225,8 +225,8 @@ public class Day11 {
         dX = -1;
 
         while (x + dX >= 0 && y + dY < height && input.get(y + dY).get(x + dX) == -1) {
-            dX --;
-            dY ++;
+            dX--;
+            dY++;
         }
 
         if (x + dX >= 0 && y + dY < height) {
@@ -236,7 +236,7 @@ public class Day11 {
         dY = 1;
 
         while (y + dY < height && input.get(y + dY).get(x) == -1) {
-            dY ++;
+            dY++;
         }
 
         if (y + dY < height)
@@ -246,8 +246,8 @@ public class Day11 {
         dY = 1;
 
         while (x + dX < width && y + dY < height && input.get(y + dY).get(x + dX) == -1) {
-            dX ++;
-            dY ++;
+            dX++;
+            dY++;
         }
 
         if (x + dX < width && y + dY < height) {
@@ -260,23 +260,13 @@ public class Day11 {
         if (board1.size() != board2.size()) return false;
         if (board1.size() <= 0) return false;
         if (board1.get(0).size() != board2.get(0).size()) return false;
-        for (int y = 0; y < board1.size(); y ++) {
+        for (int y = 0; y < board1.size(); y++) {
             for (int x = 0; x < board1.get(0).size(); x++) {
                 if (board1.get(y).get(x) != board2.get(y).get(x)) return false;
             }
         }
 
         return true;
-    }
-
-    public static int sanitizeValue(int val, int min, int max) {
-        if (val > max) {
-            return val % max;
-        } else if (val < min) {
-            return max - val;
-        }
-
-        return -1;
     }
 
     public static void printBoard(List<List<Integer>> board) {
