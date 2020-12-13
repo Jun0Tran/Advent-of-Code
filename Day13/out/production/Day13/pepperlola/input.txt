@@ -1,0 +1,22 @@
+1002394
+13,x,x,41,x,x,x,37,x,x,x,x,x,419,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,19,x,x,x,23,x,x,x,x,x,29,x,421,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,17
+
+x = 13 mod 1
+x = 41 mod 3
+x = 37 mod 7
+x = 419 mod 13
+x = 19 mod 32
+x = 23 mod 36
+x = 39 mod 42
+x = 421 mod 44
+x = 17 mod 61
+
+x = 1 mod 13
+x = 3 mod 41
+x = 7 mod 37
+x = 13 mod 419
+x = 32 mod 19
+x = 36 mod 23
+x = 42 mod 39
+x = 44 mod 421
+x = 61 mod 17
