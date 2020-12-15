@@ -1,66 +1,8 @@
 package pepperlola;
 
-import java.math.BigInteger;
 import java.util.*;
 
 public class Day14 {
-    static class Mask {
-        private String orMask;
-        private String andMask;
-
-        public Mask(long orMask, long andMask) {
-            this.orMask = Long.toBinaryString(orMask);
-            this.andMask = Long.toBinaryString(andMask);
-        }
-
-        public long apply(long in) {
-            in |= parseValue(orMask);
-            in &= parseValue(andMask);
-
-            return in;
-        }
-
-        public static Mask parseMask1(String mask) {
-            String maskString = mask.replaceAll("mask = ", "");
-            return new Mask(parseValue(maskString.replaceAll("X", "0")), parseValue(maskString.replaceAll("X", "1")));
-        }
-
-        public static List<Mask> parseMask2(String maskString) {
-            maskString = maskString.replaceAll("mask = ", "").replace("X", "Y").replaceAll("0", "X");
-            List<Mask> result = new ArrayList<>();
-            Queue<String> toProcess = new LinkedList<>();
-            toProcess.add(maskString);
-
-            while (!toProcess.isEmpty()) {
-                String processing = toProcess.remove();
-                if (processing.contains("Y")) {
-                    toProcess.add(processing.replaceFirst("Y", "0"));
-                    toProcess.add(processing.replaceFirst("Y", "1"));
-                } else {
-                    result.add(Mask.parseMask1(processing));
-                }
-            }
-
-            return result;
-        }
-
-        public long getOrMask() {
-            return parseValue(orMask);
-        }
-
-        public long getAndMask() {
-            return parseValue(andMask);
-        }
-
-        public String getOrMaskString() {
-            return orMask;
-        }
-
-        public String getAndMaskString() {
-            return andMask;
-        }
-    }
-
     public static long part1(List<String> input) {
         Mask mask = new Mask(0, 0);
         Map<Long, Long> memory = new TreeMap<>();
@@ -94,12 +36,11 @@ public class Day14 {
         for (int i = length - 1; i >= 0; i--) {
             int value = Integer.parseInt(split[i]);
             total += value == 1 ? Math.pow(2, power) : 0;
-            power ++;
+            power++;
         }
 
         return total;
     }
-
 
     public static long part2(List<String> input) {
         List<Mask> masks = new ArrayList<>();
@@ -133,5 +74,62 @@ public class Day14 {
         List<String> input = FileUtil.loadFile(directory + "/src/pepperlola/input.txt");
         System.out.println("PART 1: " + part1(input));
         System.out.println("PART 2: " + part2(input));
+    }
+
+    static class Mask {
+        private final String orMask;
+        private final String andMask;
+
+        public Mask(long orMask, long andMask) {
+            this.orMask = Long.toBinaryString(orMask);
+            this.andMask = Long.toBinaryString(andMask);
+        }
+
+        public static Mask parseMask1(String mask) {
+            String maskString = mask.replaceAll("mask = ", "");
+            return new Mask(parseValue(maskString.replaceAll("X", "0")), parseValue(maskString.replaceAll("X", "1")));
+        }
+
+        public static List<Mask> parseMask2(String maskString) {
+            maskString = maskString.replaceAll("mask = ", "").replace("X", "Y").replaceAll("0", "X");
+            List<Mask> result = new ArrayList<>();
+            Queue<String> toProcess = new LinkedList<>();
+            toProcess.add(maskString);
+
+            while (!toProcess.isEmpty()) {
+                String processing = toProcess.remove();
+                if (processing.contains("Y")) {
+                    toProcess.add(processing.replaceFirst("Y", "0"));
+                    toProcess.add(processing.replaceFirst("Y", "1"));
+                } else {
+                    result.add(Mask.parseMask1(processing));
+                }
+            }
+
+            return result;
+        }
+
+        public long apply(long in) {
+            in |= parseValue(orMask);
+            in &= parseValue(andMask);
+
+            return in;
+        }
+
+        public long getOrMask() {
+            return parseValue(orMask);
+        }
+
+        public long getAndMask() {
+            return parseValue(andMask);
+        }
+
+        public String getOrMaskString() {
+            return orMask;
+        }
+
+        public String getAndMaskString() {
+            return andMask;
+        }
     }
 }
