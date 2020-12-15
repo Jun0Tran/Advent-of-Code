@@ -5,38 +5,68 @@ import java.util.*;
 
 public class Day14 {
     static class Mask {
-        private long orMask;
-        private long andMask;
+        private String orMask;
+        private String andMask;
 
         public Mask(long orMask, long andMask) {
-            this.orMask = orMask;
-            this.andMask = andMask;
+            this.orMask = Long.toBinaryString(orMask);
+            this.andMask = Long.toBinaryString(andMask);
         }
 
         public long apply(long in) {
-            in |= orMask;
-            in &= andMask;
+            in |= parseValue(orMask);
+            in &= parseValue(andMask);
 
             return in;
         }
 
+        public static Mask parseMask1(String mask) {
+            String maskString = mask.replaceAll("mask = ", "");
+            return new Mask(parseValue(maskString.replaceAll("X", "0")), parseValue(maskString.replaceAll("X", "1")));
+        }
+
+        public static List<Mask> parseMask2(String maskString) {
+            maskString = maskString.replaceAll("mask = ", "").replace("X", "Y").replaceAll("0", "X");
+            List<Mask> result = new ArrayList<>();
+            Queue<String> toProcess = new LinkedList<>();
+            toProcess.add(maskString);
+
+            while (!toProcess.isEmpty()) {
+                String processing = toProcess.remove();
+                if (processing.contains("Y")) {
+                    toProcess.add(processing.replaceFirst("Y", "0"));
+                    toProcess.add(processing.replaceFirst("Y", "1"));
+                } else {
+                    result.add(Mask.parseMask1(processing));
+                }
+            }
+
+            return result;
+        }
+
         public long getOrMask() {
-            return orMask;
+            return parseValue(orMask);
         }
 
         public long getAndMask() {
+            return parseValue(andMask);
+        }
+
+        public String getOrMaskString() {
+            return orMask;
+        }
+
+        public String getAndMaskString() {
             return andMask;
         }
     }
 
     public static long part1(List<String> input) {
-
         Mask mask = new Mask(0, 0);
         Map<Long, Long> memory = new TreeMap<>();
         for (String s : input) {
             if (s.startsWith("mask = ")) {
-                String maskString = s.replaceAll("mask = ", "");
-                mask = new Mask(parseValue(maskString.replaceAll("X", "0")), parseValue(maskString.replaceAll("X", "1")));
+                mask = Mask.parseMask1(s);
             } else {
                 String[] splitOnEquals = s.split(" = ");
                 long result = Long.parseLong(splitOnEquals[1]);
@@ -56,24 +86,6 @@ public class Day14 {
         return sum;
     }
 
-    public static long applyMask(String in, String mask) {
-        int length = mask.length();
-        while (in.length() < length) {
-            in = "0" + in;
-        }
-        StringBuilder currentValue = new StringBuilder(in);
-
-        for (int i = length - 1; i > 0; i --) {
-            if (mask.charAt(i) == 'X') {
-                currentValue.setCharAt(i, in.charAt(i));
-            } else {
-                currentValue.setCharAt(i, mask.charAt(i));
-            }
-        }
-
-        return parseValue(currentValue.toString());
-    }
-
     public static long parseValue(String in) {
         String[] split = in.split("");
         long total = 0;
@@ -90,7 +102,30 @@ public class Day14 {
 
 
     public static long part2(List<String> input) {
-        return 0;
+        List<Mask> masks = new ArrayList<>();
+        Map<Long, Long> memory = new TreeMap<>();
+        for (String s : input) {
+            if (s.startsWith("mask = ")) {
+                masks = Mask.parseMask2(s);
+            } else {
+                String[] splitOnEquals = s.split(" = ");
+                for (Mask mask : masks) {
+                    long result = Long.parseLong(splitOnEquals[1]);
+                    String first = splitOnEquals[0];
+                    String indexString = first.substring(first.indexOf('[') + 1, first.indexOf(']'));
+                    long index = Long.parseLong(indexString);
+                    index = mask.apply(index);
+                    memory.put(index, result);
+                }
+            }
+        }
+
+        long sum = 0;
+        for (long l : memory.values()) {
+            sum += l;
+        }
+
+        return sum;
     }
 
     public static void main(String[] args) {
