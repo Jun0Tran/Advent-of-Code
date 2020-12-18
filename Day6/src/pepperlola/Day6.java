@@ -18,22 +18,27 @@ public class Day6 {
     }
 
     public static long part2(List<String> input) {
-        Map<Group, List<String>> groupsQuestions = parsePassports(input);
-
         int totalYes = 0;
 
-        List<String> alreadyCountedAnswers = new ArrayList<>();
-        for (Group group : groupsQuestions.keySet()) {
-            List<String> groupAnswers = groupsQuestions.get(group);
-            for (String answer : groupAnswers) {
-                if (!alreadyCountedAnswers.contains(answer)) {
-                    if (countOccurrences(answer, groupAnswers) == group.getSize()) {
-                        totalYes ++;
-                        alreadyCountedAnswers.add(answer);
+        Queue<String> queue = new LinkedList<>(input);
+
+
+        while (!queue.isEmpty()) {
+            List<String> answers = new LinkedList<>(Arrays.asList("abcdefghijklmnopqrstuvwxyz".split("")));
+            List<String> toReturn = new LinkedList<>(answers);
+
+            while (queue.peek() != null && !queue.peek().equals("")) {
+                String line = queue.remove();
+                for (String answer : answers) {
+                    if (!line.contains(answer)) {
+                        toReturn.remove(answer);
                     }
                 }
             }
-            alreadyCountedAnswers.clear();
+            totalYes += toReturn.size();
+            while (queue.peek() != null && queue.peek().equals("")) {
+                queue.remove();
+            }
         }
 
         return totalYes;
