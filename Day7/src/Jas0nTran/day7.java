@@ -58,9 +58,7 @@ public class day7 {
     }
 
     public static int partTwoCount(HashMap<String, List<String>> bagList, int cnt, String colorBag) {
-        //if the color bag is "contains no other bags", then return one
-        //check to see the numbers that need to be multiplied
-        //do a recursion that checks how many bags are in those bags
+        //turns colorBag into readable key
         if(colorBag.charAt(1) == '-'){
             colorBag = colorBag.substring(2);
         }
@@ -68,6 +66,7 @@ public class day7 {
             colorBag = colorBag + 's';
         }
         List<String> inBag = bagList.get(colorBag);
+        //
         if(inBag.contains("no-other-bags")) {
             return 1;
         } else {
