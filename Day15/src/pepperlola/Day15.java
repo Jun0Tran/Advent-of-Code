@@ -3,7 +3,7 @@ package pepperlola;
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class Day14 {
+public class Day15 {
     public static long part1(List<String> input) {
         return calculateNth(2020, input);
     }
